@@ -1,12 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import 'normalize.css'
+
 
 Vue.use(VueRouter);
 
 const routes = [{
   path: '/',
-  component: resolve => require(['@/views/main/Main.vue'], resolve)
+  component: resolve => require(['@/views/main/Main.vue'], resolve),
+  children: [
+    {
+      path: '/login',
+      name: 'login',
+      component: resolve => require(['@/views/login/Login.vue'], resolve)
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: resolve => require(['@/views/user/UserList.vue'], resolve)
+    }
+  ]
 }]
 
 const router = new VueRouter({routes})
