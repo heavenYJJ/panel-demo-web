@@ -6,19 +6,22 @@ Vue.use(VueRouter);
 
 const routes = [{
   path: '/',
-  redirect: '/user',
+  redirect: '/main/user',
   component: resolve => require(['@/views/main/Main.vue'], resolve),
   children: [
     {
       path: '/login',
       name: 'login',
-      component: resolve => require(['@/views/login/Login.vue'], resolve)
+      component: resolve => require(['@/views/login/Login.vue'], resolve),
+      meta: {
+        hideMenu: true
+      }
     },
     {
       path: '/user',
       name: 'user',
       component: resolve => require(['@/views/user/UserList.vue'], resolve)
-    }
+    },
   ]
 }]
 

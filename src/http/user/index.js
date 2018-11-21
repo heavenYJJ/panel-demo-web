@@ -13,7 +13,7 @@ export default {
     return axios.get(urlList.userList, {params})
   },
   login(params = {}) {
-    return axios.get(urlList.login, {params})
+    return axios.post(urlList.login, params)
   },
   addUser(params = {}) {
     return axios.post(urlList.addUser, params)
