@@ -1,0 +1,1 @@
+#### 该项目是由vue2开发的前后端分离的panel前端项目，该项目目前只有用户模块、登陆鉴权等模块。后端项目是由koa2+mysql开发的，后端项目地址：[https://github.com/heavenYJJ/panel-demo-server](https://github.com/heavenYJJ/panel-demo-server)

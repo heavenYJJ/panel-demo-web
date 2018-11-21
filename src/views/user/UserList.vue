@@ -46,19 +46,31 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+    <add-user-modal
+      :userForm="userForm"
+      @handleClose="handleClose"
+      @handleOk="handleOk"
+      :dialogVisible="dialogVisible">
+     </add-user-modal>
    </div>
 </template>
 
 
 <script>
+import addUserModal from './components/UserModal'
 export default {
   data () {
     return {
       page: 1,
       limit: 10,
       total: 0,
-      dataList: []
+      dataList: [],
+      dialogVisible: false,
+      userForm: {}
     }
+  },
+  components: {
+    addUserModal,
   },
   mounted () {
     this.getUserList();
@@ -83,14 +95,49 @@ export default {
       this.getUserList();
     },
     update(item) {
-      console.log(item)
+      this.userForm = JSON.stringify(item);
+      this.dialogVisible = true;
     },
     del(item) {
-      console.log(item)
+      this.$confirm(`是否删除${item.nick}用户?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          let loginReq = await this.$http.user.delUser({id: item.id});
+          if (loginReq.errcode === 0) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            this.getUserList()
+          } 
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     },
     add() {
-
-    }
+      const form = {
+        name: '',
+        nick: '',
+        password: '',
+        email: '',
+        detail_info: '',
+        level: '',
+      }
+      this.userForm = JSON.stringify(form);
+      this.dialogVisible = true;
+    },
+    handleClose() {
+      this.dialogVisible = false;
+    },
+    handleOk() {
+      this.dialogVisible = false;
+      this.getUserList()
+    },
   }
 }
 </script>

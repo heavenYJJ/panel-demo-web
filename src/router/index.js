@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [{
   path: '/',
+  redirect: '/user',
   component: resolve => require(['@/views/main/Main.vue'], resolve),
   children: [
     {
