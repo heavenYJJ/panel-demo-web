@@ -66,11 +66,11 @@ export default {
   props: ['dialogVisible','userForm'],
   methods: {
     beforeOpen() {
-      this.$refs.form.resetFields();
       this.form = JSON.parse(this.userForm);
     },
     handleCancel() {
       this.$emit('handleClose');
+      this.$refs.form.resetFields();
     },
     handleOk() {
       this.$refs.form.validate(async (valid) => {
@@ -80,11 +80,13 @@ export default {
                 let loginReq = await this.$http.user.updateUser(this.form);
                 if (loginReq.errcode === 0) {
                   this.$emit('handleOk', true);
+                  this.$refs.form.resetFields();
                 } 
               } else {
                 let loginReq = await this.$http.user.addUser(this.form);
                 if (loginReq.errcode === 0) {
                   this.$emit('handleOk', true);
+                  this.$refs.form.resetFields();
                 } 
               }
             } catch (err) {
